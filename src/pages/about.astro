@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="关于 · AI Minder" description="关于这个博客的技术栈与使用方式。">
+  <section class="page-panel prose">
+    <p class="eyebrow">About this site</p>
+    <h1>这站怎么用</h1>
+    <p>
+      这是一套基于 <strong>Astro</strong> 的静态博客，文章来源是 <strong>Markdown 文件</strong>。
+      你只需要往 <code>src/content/posts/</code> 里新增文章，构建时就会自动生成 HTML 页面。
+    </p>
+
+    <h2>你现在能直接干的事</h2>
+    <ul>
+      <li>新增 Markdown 文章并发布</li>
+      <li>修改首页文案和导航</li>
+      <li>继续扩展标签页、归档页、搜索、评论系统</li>
+      <li>推到 GitHub 后自动触发 Pages 部署</li>
+    </ul>
+
+    <h2>文章 Frontmatter 示例</h2>
+    <pre><code>---
+title: 文章标题
+description: 一句话摘要
+pubDate: 2026-03-19
+updatedDate: 2026-03-19
+featured: false
+tags:
+  - AI
+  - Notes
+---
+
+正文从这里开始。
+</code></pre>
+  </section>
+</Layout>

@@ -1,0 +1,80 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const featured = posts.find((post) => post.data.featured) ?? posts[0];
+const latestPosts = posts.filter((post) => post.id !== featured?.id);
+---
+
+<Layout title="AI Minder" description="一个支持 Markdown 生成 HTML、并自动部署到 GitHub Pages 的现代简约博客。">
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Modern · Minimal · Markdown-first</p>
+      <h1>写 Markdown，剩下的交给站点自动生成。</h1>
+      <p class="lead">
+        这是一个面向内容创作的静态博客：轻、快、干净，适合笔记、文章、产品思考和 AI 观察。
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href={featured ? `/posts/${featured.slug}/` : '#posts'}>看最新文章</a>
+        <a class="button secondary" href="/about/">看看这站怎么用</a>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <span class="chip">Markdown → HTML</span>
+      <span class="chip">Astro Static Site</span>
+      <span class="chip">GitHub Pages Auto Deploy</span>
+      <p>
+        新文章只要丢进 <code>src/content/posts/</code>，构建后就会自动变成静态页面。
+      </p>
+    </div>
+  </section>
+
+  {featured && (
+    <section class="featured-post">
+      <div class="section-heading">
+        <p>Featured</p>
+        <h2>置顶文章</h2>
+      </div>
+
+      <article class="post-card featured">
+        <div class="post-meta">
+          <time datetime={featured.data.pubDate.toISOString()}>{featured.data.pubDate.toLocaleDateString('zh-CN')}</time>
+          {featured.data.tags.map((tag) => <span class="tag">#{tag}</span>)}
+        </div>
+        <h3>
+          <a href={`/posts/${featured.slug}/`}>{featured.data.title}</a>
+        </h3>
+        <p>{featured.data.description}</p>
+        <a class="text-link" href={`/posts/${featured.slug}/`}>阅读全文 →</a>
+      </article>
+    </section>
+  )}
+
+  <section id="posts" class="posts-section">
+    <div class="section-heading">
+      <p>Latest posts</p>
+      <h2>最新文章</h2>
+    </div>
+
+    <div class="post-grid">
+      {latestPosts.map((post) => (
+        <article class="post-card">
+          <div class="post-meta">
+            <time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.toLocaleDateString('zh-CN')}</time>
+            {post.data.tags.slice(0, 3).map((tag) => <span class="tag">#{tag}</span>)}
+          </div>
+          <h3>
+            <a href={`/posts/${post.slug}/`}>{post.data.title}</a>
+          </h3>
+          <p>{post.data.description}</p>
+          <a class="text-link" href={`/posts/${post.slug}/`}>继续看 →</a>
+        </article>
+      ))}
+    </div>
+  </section>
+</Layout>

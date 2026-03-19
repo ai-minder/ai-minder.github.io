@@ -1,0 +1,37 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post }
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Layout title={`${post.data.title} · AI Minder`} description={post.data.description}>
+  <article class="page-panel post-article">
+    <header class="post-header">
+      <p class="eyebrow">Post</p>
+      <h1>{post.data.title}</h1>
+      <p class="lead">{post.data.description}</p>
+      <div class="post-meta">
+        <time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.toLocaleDateString('zh-CN')}</time>
+        {post.data.updatedDate && (
+          <span>更新于 {post.data.updatedDate.toLocaleDateString('zh-CN')}</span>
+        )}
+        {post.data.tags.map((tag) => <span class="tag">#{tag}</span>)}
+      </div>
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</Layout>

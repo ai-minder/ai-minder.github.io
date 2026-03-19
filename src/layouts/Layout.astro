@@ -1,0 +1,81 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'AI Minder',
+  description = '一个好看、现代、简约的 Markdown 驱动博客。'
+} = Astro.props;
+
+const site = Astro.site ?? new URL('https://ai-minder.github.io');
+const canonical = new URL(Astro.url.pathname, site);
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0f172a" />
+    <link rel="canonical" href={canonical.toString()} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="/">
+          <span class="brand-mark">AI</span>
+          <span class="brand-text">
+            <strong>AI Minder</strong>
+            <small>Minimal thoughts, clean delivery.</small>
+          </span>
+        </a>
+
+        <nav class="site-nav" aria-label="主导航">
+          <a href="/">首页</a>
+          <a href="/about/">关于</a>
+          <a href="/rss.xml">RSS</a>
+          <button class="theme-toggle" type="button" aria-label="切换主题" data-theme-toggle>
+            <span data-theme-icon>◐</span>
+          </button>
+        </nav>
+      </header>
+
+      <main>
+        <slot />
+      </main>
+
+      <footer class="site-footer">
+        <p>© {new Date().getFullYear()} AI Minder. Built with Astro + Markdown.</p>
+      </footer>
+    </div>
+
+    <script is:inline>
+      const storageKey = 'ai-minder-theme';
+      const root = document.documentElement;
+      const icon = document.querySelector('[data-theme-icon]');
+
+      const applyTheme = (theme) => {
+        root.dataset.theme = theme;
+        if (icon) icon.textContent = theme === 'dark' ? '☀︎' : '◐';
+      };
+
+      const stored = localStorage.getItem(storageKey);
+      const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      applyTheme(stored || (systemDark ? 'dark' : 'light'));
+
+      document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
+        const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        localStorage.setItem(storageKey, next);
+        applyTheme(next);
+      });
+    </script>
+  </body>
+</html>
