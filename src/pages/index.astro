@@ -11,28 +11,6 @@ const latestPosts = posts.filter((post) => post.id !== featured?.id);
 ---
 
 <Layout title="AI Minder" description="一个支持 Markdown 生成 HTML、并自动部署到 GitHub Pages 的现代简约博客。">
-  <section class="hero">
-    <div class="hero-copy">
-      <p class="eyebrow">Modern · Minimal · Markdown-first</p>
-      <h1>写 Markdown，剩下的交给站点自动生成。</h1>
-      <p class="lead">
-        这是一个面向内容创作的静态博客：轻、快、干净，适合笔记、文章、产品思考和 AI 观察。
-      </p>
-      <div class="hero-actions">
-        <a class="button primary" href={featured ? `/posts/${featured.slug}/` : '#posts'}>看最新文章</a>
-        <a class="button secondary" href="/about/">看看这站怎么用</a>
-      </div>
-    </div>
-
-    <div class="hero-card">
-      <span class="chip">Markdown → HTML</span>
-      <span class="chip">Astro Static Site</span>
-      <span class="chip">GitHub Pages Auto Deploy</span>
-      <p>
-        新文章只要丢进 <code>src/content/posts/</code>，构建后就会自动变成静态页面。
-      </p>
-    </div>
-  </section>
 
   {featured && (
     <section class="featured-post">
