@@ -6,7 +6,7 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
-const featured = posts.find((post) => post.data.featured) ?? posts[0];
+const featured = posts.find((post) => post.data.featured);
 const latestPosts = posts.filter((post) => post.id !== featured?.id);
 ---
 

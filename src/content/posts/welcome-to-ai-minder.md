@@ -3,7 +3,7 @@ title: 欢迎来到 AI Minder
 description: 一套为 Markdown 写作准备好的现代极简博客，现在已经能直接拿来发文章了。
 pubDate: 2026-03-19
 updatedDate: 2026-03-19
-featured: true
+featured: false
 tags:
   - Launch
   - Astro

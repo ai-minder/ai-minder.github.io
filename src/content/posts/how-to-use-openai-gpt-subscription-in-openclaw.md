@@ -3,7 +3,7 @@ title: 如何在 OpenClaw 上使用 GPT 订阅：别把 ChatGPT 订阅和 API Ke
 description: 想把 OpenAI 的 GPT 能力接到 OpenClaw 里？这篇文章讲清楚 ChatGPT 订阅、OpenAI API Key、Codex OAuth 以及推荐接入方式。
 pubDate: 2026-03-19
 updatedDate: 2026-03-19
-featured: true
+featured: false
 tags:
   - OpenClaw
   - OpenAI
